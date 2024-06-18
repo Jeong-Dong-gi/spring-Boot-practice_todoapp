@@ -34,7 +34,18 @@ public class TodoCont {
 //	public String putTodo(@RequstParam TodoEntity tEntity) {
 		public String putTodo(TodoEntity tEntity) {
 //		System.out.println(tEntity);
-		tEntity.setCompleted(false);
+		if(tEntity.getCompleted()==null) {
+			tEntity.setCompleted(false);
+		}
+		tService.putTodo(tEntity);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/updateCompleted")
+	public String updateCompleted(TodoEntity tEntity) {
+		// completed 속성만 반전 시켜서 DB에 수정하기
+		tEntity.setCompleted(!tEntity.getCompleted());
+//		System.out.println(tEntity);
 		tService.putTodo(tEntity);
 		return "redirect:/";
 	}
@@ -43,6 +54,14 @@ public class TodoCont {
 	public String deleteTodo(@PathVariable Integer id) {
 		tService.deleteTodo(id);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/update/{id}")
+	public String updateTodo(@PathVariable Integer id, Model model) {
+		// id값을 이용하여 한개의 todo 가져오기
+		TodoEntity tEntity = tService.getTodo(id);
+		model.addAttribute("todo", tEntity);
+		return "update-todo";
 	}
 	
 }
