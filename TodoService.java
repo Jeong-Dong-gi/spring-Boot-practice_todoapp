@@ -25,4 +25,14 @@ public class TodoService {
 	public void deleteTodo(Integer id) {
 		tRepo.deleteById(id);
 	}
+
+	
+	public void updateTodo(Integer id) {
+		
+		
+	}
+	// id 값을 이용하여 한개의 todo를 가져오기
+	public TodoEntity getTodo(Integer id) {
+		return tRepo.findById(id).get();
+	}
 }
